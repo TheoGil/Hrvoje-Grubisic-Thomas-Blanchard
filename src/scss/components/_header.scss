@@ -1,0 +1,35 @@
+.header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+
+  &__column {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    width: 33.3333vw;
+    box-sizing: border-box;
+  }
+
+  .button {
+    font-weight: 700;
+  }
+}
+
+.logo {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+  display: block;
+  color: white;
+
+  &__svg {
+    width: 40px;
+    fill: currentColor;
+  }
+}

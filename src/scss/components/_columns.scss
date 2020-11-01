@@ -1,0 +1,29 @@
+.columns-container {
+  height: 100vh;
+  display: flex;
+  justify-content: end;
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 33.3333vw;
+  box-sizing: border-box;
+  padding: 20px 30px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+
+    width: 1px;
+    height: 100vh;
+    background-color: white;
+  }
+
+  &__footer {
+    margin-top: auto;
+  }
+}

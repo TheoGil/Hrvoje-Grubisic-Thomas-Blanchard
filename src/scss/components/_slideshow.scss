@@ -1,0 +1,96 @@
+.slideshow {
+  position: fixed;
+  height: 100vh;
+  display: flex;
+  top: 0;
+  left: 0;
+}
+
+.slideshow-ui {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slideshow-counter {
+  display: flex;
+  font-size: 0.75rem;
+  user-select: none;
+
+  &__number {
+    padding: 3px 0;
+    box-sizing: border-box;
+  }
+}
+
+.current-slide-number-container {
+  height: 21px;
+  overflow: hidden;
+  padding-right: 15px;
+  position: relative;
+
+  .current-slide-number--next {
+    position: absolute;
+    top: 0;
+    transform: translateY(100%);
+  }
+}
+
+.total-slides-number {
+  border-left: 1px currentColor solid;
+  padding-left: 15px;
+}
+
+.slideshow-controls {
+  display: flex;
+  color: white;
+
+  &__button {
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    border: 1px white solid;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+
+    &:first-of-type {
+      margin-right: 10px;
+    }
+
+    &:last-of-type {
+      margin-left: 10px;
+    }
+  }
+
+  &__icon {
+    width: 10px;
+    height: 10px;
+    fill: white;
+  }
+}
+
+.slideshow-captions-container {
+  position: relative;
+}
+
+.slideshow-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  font-size: 70px; // @TODO Implement fluid font size so text never bleed out of the column
+  display: none;
+  pointer-events: none;
+
+  &.active {
+    display: block;
+    pointer-events: all;
+  }
+
+  .word {
+    display: block;
+    overflow: hidden;
+    margin-bottom: -15px; // Using margin bottom instead of line height, because line-height with overflow-hidden will clip descendings
+  }
+}
