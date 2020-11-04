@@ -1,0 +1,41 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden; // Prevent temporary scrollbar during intro animation
+  box-sizing: border-box;
+  padding-left: $column-padding-x;
+  padding-right: $column-padding-x;
+
+  @include bp($breakpoint) {
+    flex-direction: row;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .column {
+    justify-content: center;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:first-of-type {
+      border-bottom: 1px white solid;
+
+      @include bp($breakpoint) {
+        border-bottom-width: 0;
+      }
+    }
+
+    @include bp($breakpoint) {
+      width: $column-width;
+      padding-left: $column-padding-x;
+      padding-right: $column-padding-x;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.loader {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  width: 125px;
+  height: 125px;
+
+  &-svg {
+    fill: none;
+    stroke: white;
+
+    &-path {
+      stroke-dasharray: 100px;
+      stroke-dashoffset: 100px;
+      animation: all 1s ease-out;
+    }
+  }
+
+  &-percent {
+    position: absolute;
+    font-size: 1.5rem;
+    font-variant: tabular-nums;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

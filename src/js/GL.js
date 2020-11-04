@@ -5,8 +5,6 @@ import fragment from "../shaders/slideshow/fragment.glsl";
 import vertex from "../shaders/slideshow/vertex.glsl";
 import transparentPixelSrc from "../img/transparent-pixel.png";
 
-console.log(fragment, vertex);
-
 const PARAMS = {
   offsetAmount: 2.25,
   columnsCount: 3,
@@ -18,22 +16,18 @@ class GL {
     this.currentSlideIndex = 0;
     this.nextSlideIndex = 0;
 
-    this.resize = this.resize.bind(this);
     this.render = this.render.bind(this);
 
     this.initRenderer(options.canvas);
     this.initGl();
     this.initTransparentTexture();
-    this.initSlides(options.slides);
     this.initProgram();
     this.initGeometry();
     this.initMesh();
+    this.initTextures(options.slidesCount);
     // this.initGUI();
 
-    this.resize(); // Trigger resize right away to set the initial size of our plane
-    window.addEventListener("resize", this.resize);
-
-    // requestAnimationFrame(this.render);
+    requestAnimationFrame(this.render);
   }
 
   initRenderer(canvas) {
@@ -69,35 +63,19 @@ class GL {
     img.onload = () => (this.transparentPixelTexture.image = img);
   }
 
-  initSlides(slides) {
-    this.slides = slides;
-    this.slides.forEach((slide) => {
+  initTextures(count) {
+    this.textures = [];
+
+    for (let i = 0; i < count; i++) {
       // Init empty texture while source loading
-      const texture = new Texture(this.gl, {
-        generateMipmaps: false,
-        width: 1920, // @TODO Dynamically set size based on video actual size
-        height: 1080, // @TODO Dynamically set size based on video actual size
-      });
-
-      // Create video with attributes that let it autoplay
-      // Check update loop to see when video is attached to texture
-      const video = document.createElement("video");
-      video.src = slide.src;
-
-      // Disclaimer: video autoplay is a confusing, constantly-changing browser feature.
-      // The best approach is to never assume that it will work, and therefore prepare for a fallback.
-      // Tested on mac: Chrome, Safari, Firefox; android: chrome
-      video.loop = true;
-      video.muted = true;
-      video.play();
-      // TODO: test ios. Possible add following
-      // video.setAttribute('crossorigin', 'anonymous');
-      // video.setAttribute('webkit-playsinline', true);
-      // video.setAttribute('playsinline', true);
-
-      slide.texture = texture;
-      slide.video = video;
-    });
+      this.textures.push(
+        new Texture(this.gl, {
+          generateMipmaps: false,
+          width: 1920, // @TODO Dynamically set size based on video actual size
+          height: 1080, // @TODO Dynamically set size based on video actual size
+        })
+      );
+    }
   }
 
   initProgram() {
@@ -106,14 +84,12 @@ class GL {
       fragment,
       uniforms: {
         uTexture1: { value: this.transparentPixelTexture },
-        uTexture2: { value: this.slides[this.nextSlideIndex].texture },
+        uTexture2: { value: this.transparentPixelTexture },
         uOffsetAmount: { value: PARAMS.offsetAmount },
         uColumnsCount: { value: PARAMS.columnsCount },
         uTransitionProgress: { value: this.transitionProgress },
-        uInputAspect: { value: 1920 / 1080 }, // @TODO dynamically retrieve real slide dimensions
-        uInputResolution: { value: [1920, 1080] }, // @TODO dynamically retrieve real slide dimensions
-        uOutputAspect: { value: window.innerWidth / window.innerHeight }, // @TODO update on resize
-        uOutputResolution: { value: [window.innerWidth, window.innerHeight] },
+        uInputResolution: { value: [16, 9] }, // @TODO dynamically retrieve real slide dimensions
+        uOutputResolution: { value: [0, 0] }, // Will be set from the updateSize method
         uAngle: { value: (45 * Math.PI) / 180 },
         uScale: { value: 3 },
       },
@@ -161,7 +137,7 @@ class GL {
   }
   */
 
-  resize() {
+  updateSize() {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.program.uniforms.uOutputResolution.value = [
       window.innerWidth,
@@ -169,38 +145,20 @@ class GL {
     ];
   }
 
-  updateTexture(slide) {
-    if (slide) {
-      // Attach video and/or update texture when video is ready
-      if (slide.video.readyState >= slide.video.HAVE_ENOUGH_DATA) {
-        if (!slide.texture.image) {
-          slide.texture.image = slide.video;
-        }
-        slide.texture.needsUpdate = true;
-      }
-    }
+  attachVideosToEmptyTextures(videos) {
+    videos.forEach((video, i) => {
+      this.textures[i].image = video;
+    });
   }
 
   isTransitionRunning() {
     return this.transitionProgress !== 0;
   }
 
-  render() {
-    requestAnimationFrame(this.render);
-
-    this.updateTexture(this.slides[this.currentSlideIndex]);
-
-    if (this.isTransitionRunning()) {
-      this.updateTexture(this.slides[this.nextSlideIndex]);
-    }
-
-    this.renderer.render({ scene: this.mesh });
-  }
-
   goToSlide(index) {
     this.nextSlideIndex = index;
 
-    this.program.uniforms.uTexture2.value = this.slides[index].texture;
+    this.program.uniforms.uTexture2.value = this.textures[index];
     gsap.killTweensOf(this);
     gsap.to(this, {
       transitionProgress: 1,
@@ -212,9 +170,32 @@ class GL {
       onComplete: () => {
         this.transitionProgress = 0;
         this.currentSlideIndex = index;
-        this.program.uniforms.uTexture1.value = this.slides[index].texture;
+        this.program.uniforms.uTexture1.value = this.textures[index];
       },
     });
+  }
+
+  dispose() {
+    this.program.remove();
+    this.geometry.remove();
+  }
+
+  render() {
+    requestAnimationFrame(this.render);
+
+    if (this.textures && this.textures[this.currentSlideIndex].image) {
+      this.textures[this.currentSlideIndex].needsUpdate = true;
+    }
+
+    if (
+      this.textures &&
+      this.isTransitionRunning() &&
+      this.textures[this.nextSlideIndex].image
+    ) {
+      this.textures[this.nextSlideIndex].needsUpdate = true;
+    }
+
+    this.renderer.render({ scene: this.mesh });
   }
 }
 

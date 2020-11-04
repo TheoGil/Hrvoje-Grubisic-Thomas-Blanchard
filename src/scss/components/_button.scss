@@ -1,6 +1,6 @@
 .button {
   border-width: 0;
-  background-color: #1739a5;
+  background-color: $color-bg;
   padding: 5px 15px;
   border-radius: 5px;
 
@@ -9,29 +9,4 @@
   color: white;
   font-size: 1em;
   text-decoration: none;
-
-  &--transparent {
-    background-color: transparent;
-  }
-
-  &__icon {
-    fill: currentColor;
-    width: 10px;
-    height: 10px;
-    margin-left: 5px;
-    vertical-align: middle;
-  }
-}
-
-.burger-menu-button {
-  background-color: transparent;
-  border: 0;
-  color: white;
-  cursor: pointer;
-
-  &__icon {
-    fill: currentColor;
-    width: 1.5em;
-    height: 1.5em;
-  }
 }

@@ -1,0 +1,21 @@
+// Only use focus style when navigating using keyboard
+// (ie: no big focus ring when clicking link but yes big focus ring when using tab)
+// https://css-tricks.com/keyboard-only-focus-styles/
+// Support pretty rough...
+
+// Set fallback focus styles
+*:focus {
+  outline-offset: 5px;
+  outline: 2px solid white;
+}
+
+// Set focus styles when focus in introduced by mouse
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Set focus styles when focus in introduced by keyboard
+*:focus-visible {
+  outline-offset: 5px;
+  outline: 2px solid white;
+}

@@ -1,0 +1,20 @@
+.line {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: $column-width;
+  height: 100%;
+  width: 1px;
+  background-color: white;
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+
+  @include bp($breakpoint) {
+    display: block;
+  }
+
+  &-last {
+    left: $column-width * 2;
+  }
+}

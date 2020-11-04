@@ -7,16 +7,37 @@
   display: flex;
   justify-content: space-between;
 
-  &__column {
+  &-column {
     display: flex;
     justify-content: space-between;
-    padding: 20px 30px;
-    width: 33.3333vw;
+    padding: $column-padding;
+    width: $column-width;
     box-sizing: border-box;
+
+    // Make the first column fill the whole header
+    &:first-of-type {
+      width: 100%;
+      align-items: center;
+
+      @include bp($breakpoint) {
+        width: $column-width;
+      }
+    }
+
+    // Completly hide the other(s) on mobile ¯\_(ツ)_/¯
+    &:not(:first-of-type) {
+      display: none;
+
+      @include bp($breakpoint) {
+        display: flex;
+      }
+    }
   }
 
+  .burger-button,
   .button {
-    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-$translate-y);
   }
 }
 
@@ -27,8 +48,10 @@
   margin: 0;
   display: block;
   color: white;
+  opacity: 0;
+  transform: translateY(-$translate-y);
 
-  &__svg {
+  &-svg {
     width: 40px;
     fill: currentColor;
   }

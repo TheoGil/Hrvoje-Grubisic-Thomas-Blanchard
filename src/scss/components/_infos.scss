@@ -1,7 +1,9 @@
 .infos {
-  max-width: 60%;
+  max-width: 80%;
+  opacity: 0;
+  transform: translateY($translate-y);
 
   p {
-    margin: 0;
+    margin: 0 0 10px 0;
   }
 }

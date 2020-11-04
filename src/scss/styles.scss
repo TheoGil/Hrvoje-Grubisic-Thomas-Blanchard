@@ -2,27 +2,18 @@
 @import "./abstract/variables";
 @import "./abstract/fonts";
 @import "./abstract/flex";
+@import "./abstract/breakpoints";
 @import "./components/button";
 @import "./components/link";
-@import "./components/slideshow";
+@import "./components/body";
+@import "./components/app";
+@import "./components/line";
+@import "./components/columns";
+@import "./components/slideshow/slideshow";
 @import "./components/infos";
 @import "./components/header";
-@import "./components/columns";
 @import "./components/menu";
-
-body {
-  font-family: $font-family, sans-serif;
-  font-size: 14px;
-  margin: 0;
-  background-color: #11182b;
-  color: white;
-}
-
-.video-canvas {
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-}
+@import "./components/loader";
+@import "./components/burger";
+@import "./components/footer";
+@import "./components/a11y";

@@ -1,0 +1,93 @@
+@import "./slideshow-captions";
+
+$slideshow-controls-button-radius: 40px;
+$slideshow-controls-button-x-margin: 10px;
+$slideshow-controls-button-icon-size: 10px;
+
+.slideshow {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+
+  &-ui {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-counter {
+    display: flex;
+    font-size: 0.75rem;
+    user-select: none;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY($translate-y);
+
+    &-number {
+      padding: 3px 0;
+      box-sizing: border-box;
+    }
+  }
+
+  &-controls {
+    display: flex;
+    opacity: 0;
+    transform: translateY($translate-y);
+
+    &-button {
+      color: currentColor;
+      background-color: transparent;
+      height: $slideshow-controls-button-radius;
+      width: $slideshow-controls-button-radius;
+      border: 1px currentColor solid;
+      border-radius: 50%;
+      padding: 0;
+      cursor: pointer;
+
+      &:first-of-type {
+        margin-right: $slideshow-controls-button-x-margin;
+      }
+
+      &:last-of-type {
+        margin-left: $slideshow-controls-button-x-margin;
+      }
+    }
+
+    &-icon {
+      width: $slideshow-controls-button-icon-size;
+      height: $slideshow-controls-button-icon-size;
+      fill: currentColor;
+    }
+  }
+}
+
+.gl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+$counter-padding-x: 15px;
+
+.current-slide-number {
+  &-container {
+    height: 21px; // ✨
+    padding-right: $counter-padding-x;
+    position: relative;
+  }
+
+  &-next {
+    position: absolute;
+    top: 0;
+    transform: translateY(100%);
+  }
+}
+
+.total-slides-number {
+  border-left: 1px currentColor solid;
+  padding-left: $counter-padding-x;
+}

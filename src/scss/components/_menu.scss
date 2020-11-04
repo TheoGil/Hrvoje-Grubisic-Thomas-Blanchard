@@ -1,18 +1,42 @@
 .menu {
   position: fixed;
-  z-index: 1;
+  z-index: 2; // Above overlay
   left: 0;
   top: 0;
   height: 100%;
-  width: 33.3333vw;
+  width: 100%;
   box-sizing: border-box;
   pointer-events: none;
 
-  &:after {
+  // Introduce an in-between breakpoint to have a better control over the menu width (100% width on medium sized screen is a bit "punch in the face")
+  @include bp(500px) {
+    width: $column-width * 2;
+  }
+
+  @include bp($breakpoint) {
+    width: $column-width;
+  }
+
+  // Discreet shadow. Using a pseudo element and transitioning its opacity instead of animated box-shadow of the actual element for perf benefits.
+  &::before {
     content: "";
     position: absolute;
     z-index: -1;
-    background-color: rgb(18, 27, 50);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: opacity $easing 0.75s;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+  }
+
+  // Plain overlay beneath the menu entries
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background-color: $color-bg;
     top: 0;
     left: 0;
     right: 0;
@@ -25,80 +49,143 @@
   &.active {
     pointer-events: all;
 
+    &:before {
+      opacity: 1;
+    }
+
     &:after {
       transform: scaleY(1);
     }
-  }
 
-  &__close {
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    z-index: 1;
-    background-color: transparent;
-    border-width: 0;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    cursor: pointer;
+    + .menu-overlay {
+      opacity: 0.75;
+      pointer-events: all;
+    }
 
-    svg {
-      fill: white;
-      width: 100%;
-      height: 100%;
+    .burger-button {
+      transition-delay: 0ms;
+      opacity: 1;
     }
   }
 
-  &--entries-list {
+  .burger-button {
+    opacity: 0;
+    position: fixed;
+    right: $column-padding-x;
+    top: 32px; // ✨ Magic value found out by manual tweaks. Its position the icon right on top the header's icon. Because header is display flex align-center logo height blablabla...
+    z-index: 1;
+    transition: opacity 1s $easing;
+    transition-delay: 500ms;
+
+    @include bp($breakpoint) {
+      position: absolute;
+      top: 31.5px; // ✨ Magic value found out by manual tweaks. Its position the icon right on top the header's icon. Because header is display flex align-center logo height blablabla...
+    }
+  }
+
+  &-entries-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
-
     display: flex;
     flex-direction: column;
     height: 100%;
   }
 
-  &--entry {
+  &-entry {
     position: relative;
     flex-basis: 0;
     flex-grow: 1;
     overflow: hidden;
     clip-path: inset(0 100% 0 0);
+    pointer-events: auto;
+    transition: opacity 500ms $easing;
 
-    &--link {
+    &-link {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
+      width: 100%;
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       color: white;
       text-decoration: none;
       font-size: 25px;
       font-weight: 700;
+      border-width: 0;
+      background-color: transparent;
+      cursor: pointer;
 
-      &:hover {
-        .menu--entry--picture {
+      &:hover,
+      &:focus {
+        .menu-entry-picture {
           transform: scale(1.1) rotate(5deg);
+        }
+      }
+
+      // Set fallback focus styles
+      // See comments in the _a11y.scss file for explanations
+      &:focus {
+        .menu-entry-label {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+
+      // Set focus styles when focus in introduced by mouse
+      // See comments in the _a11y.scss file for explanations
+      &:focus:not(:focus-visible) {
+        .menu-entry-label {
+          &::after {
+            opacity: 0;
+          }
+        }
+      }
+
+      // Set focus styles when focus in introduced by keyboard
+      // See comments in the _a11y.scss file for explanations
+      &:focus-visible {
+        .menu-entry-label {
+          &::after {
+            opacity: 1;
+          }
         }
       }
     }
 
-    &--label-container {
-      margin: 0 0 30px 30px;
+    &-label-container {
+      margin: 0 0 ($column-padding-y - ($ring-offset + $ring-width))
+        ($column-padding-x - ($ring-offset + $ring-width));
       overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      left: 0;
     }
 
-    &--label {
+    &-label {
       transform: translateY(100%);
+      position: relative;
+      padding: $ring-offset + $ring-width;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: $ring-width $ring-color $ring-style;
+        opacity: 0;
+      }
     }
 
-    &--picture {
+    &-picture {
       // Voluntarely make image bleed out of the container to make sure it
       // will still covers it entirely when rotated on hover
-      $bleed: 10px;
+      $bleed: 20px;
 
       position: absolute;
       z-index: -1;
@@ -109,7 +196,27 @@
       width: calc(100% + #{$bleed * 2});
       height: calc(100% + #{$bleed * 2});
       object-fit: cover;
-      transition: transform $easing 1s;
+      transition: transform $ease-out-expo 3s;
     }
+  }
+}
+
+// Not to be confused with the .menu::after, this overlay cover the whole screen.
+// Its light opacity slightly covers the page content so we can focus on the menu.
+// Clicking it will close the menu.
+.menu-overlay {
+  position: fixed;
+  z-index: 1; // Above content but beneath menu
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: black; // Black on smaller devices because the menu close icon is located outside the menu
+  transition: opacity $easing 0.75s;
+  pointer-events: none;
+
+  @include bp($breakpoint) {
+    background-color: $color-bg;
   }
 }

@@ -3,3 +3,23 @@ $font-family: "Roboto";
 
 // ANIMATION
 $easing: cubic-bezier(0.33, 1, 0.68, 1); // ease out cubic
+$ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+$translate-y: 100px;
+
+// A11Y - FOCUS RING
+$ring-width: 2px;
+$ring-style: solid;
+$ring-color: white;
+$ring-offset: 5px;
+
+// SIZING
+$column-width: 33.3333vw;
+$column-padding-x: 30px;
+$column-padding-y: 20px;
+$column-padding: $column-padding-y $column-padding-x;
+
+// COLOR
+$color-bg: #ffcbcb; // Pastel pink
+
+// BP
+$breakpoint: 950px; // Found out by manually shrinking browser until layout breaks. It only works because content is static, if the slides titles change, the value will also probably need to change.

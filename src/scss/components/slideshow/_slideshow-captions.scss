@@ -1,0 +1,28 @@
+.slideshow-captions-container {
+  position: relative;
+  height: 100%;
+  padding-left: $column-padding-x;
+  box-sizing: border-box;
+}
+
+.slideshow-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  font-size: 70px; // @TODO Implement fluid font size so text never bleed out of the column
+  display: none;
+  pointer-events: none;
+  margin: 0;
+
+  &.active {
+    display: block;
+    pointer-events: all;
+  }
+
+  .word {
+    display: block;
+    overflow: hidden;
+    margin-bottom: -15px; // Using margin bottom to tighten lines instead of line height, because line-height doesn't play well with overflow hidden and it will clip descendings of letters
+  }
+}
