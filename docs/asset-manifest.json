@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.e46e2a2e.chunk.css",
-    "main.js": "/static/js/main.c7364a01.chunk.js",
-    "main.js.map": "/static/js/main.c7364a01.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.e2235f84.js",
-    "runtime-main.js.map": "/static/js/runtime-main.e2235f84.js.map",
-    "static/js/2.b8688912.chunk.js": "/static/js/2.b8688912.chunk.js",
-    "static/js/2.b8688912.chunk.js.map": "/static/js/2.b8688912.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.e46e2a2e.chunk.css.map": "/static/css/main.e46e2a2e.chunk.css.map",
-    "static/js/2.b8688912.chunk.js.LICENSE.txt": "/static/js/2.b8688912.chunk.js.LICENSE.txt",
-    "static/media/galaxy-gates.66014612.jpg": "/static/media/galaxy-gates.66014612.jpg",
-    "static/media/galaxy-gates.8fb1d702.mp4": "/static/media/galaxy-gates.8fb1d702.mp4",
-    "static/media/kingdom-of-colors.439da5b7.jpg": "/static/media/kingdom-of-colors.439da5b7.jpg",
-    "static/media/kingdom-of-colours.fa694201.mp4": "/static/media/kingdom-of-colours.fa694201.mp4",
-    "static/media/mini-planets.bd14c578.jpg": "/static/media/mini-planets.bd14c578.jpg",
-    "static/media/mini-planets.e50c448a.mp4": "/static/media/mini-planets.e50c448a.mp4",
-    "static/media/styles.scss": "/static/media/roboto-regular-webfont.898ab092.woff"
+    "main.css": "./static/css/main.147a44c1.chunk.css",
+    "main.js": "./static/js/main.c7364a01.chunk.js",
+    "main.js.map": "./static/js/main.c7364a01.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.3c0c1d53.js",
+    "runtime-main.js.map": "./static/js/runtime-main.3c0c1d53.js.map",
+    "static/js/2.b8688912.chunk.js": "./static/js/2.b8688912.chunk.js",
+    "static/js/2.b8688912.chunk.js.map": "./static/js/2.b8688912.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/main.147a44c1.chunk.css.map": "./static/css/main.147a44c1.chunk.css.map",
+    "static/js/2.b8688912.chunk.js.LICENSE.txt": "./static/js/2.b8688912.chunk.js.LICENSE.txt",
+    "static/media/galaxy-gates.66014612.jpg": "./static/media/galaxy-gates.66014612.jpg",
+    "static/media/galaxy-gates.8fb1d702.mp4": "./static/media/galaxy-gates.8fb1d702.mp4",
+    "static/media/kingdom-of-colors.439da5b7.jpg": "./static/media/kingdom-of-colors.439da5b7.jpg",
+    "static/media/kingdom-of-colours.fa694201.mp4": "./static/media/kingdom-of-colours.fa694201.mp4",
+    "static/media/mini-planets.bd14c578.jpg": "./static/media/mini-planets.bd14c578.jpg",
+    "static/media/mini-planets.e50c448a.mp4": "./static/media/mini-planets.e50c448a.mp4",
+    "static/media/styles.scss": "./static/media/roboto-regular-webfont.898ab092.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.e2235f84.js",
+    "static/js/runtime-main.3c0c1d53.js",
     "static/js/2.b8688912.chunk.js",
-    "static/css/main.e46e2a2e.chunk.css",
+    "static/css/main.147a44c1.chunk.css",
     "static/js/main.c7364a01.chunk.js"
   ]
 }
