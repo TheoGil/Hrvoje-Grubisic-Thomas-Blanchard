@@ -1,6 +1,7 @@
-import React from "react";
+import React, {forwardRef} from "react";
 
-function Column(props) {
-  return <div className="column">{props.children}</div>;
-}
+const Column = forwardRef((props, ref) => {
+  return <div className="column" ref={ref}>{props.children}</div>;
+})
+
 export default Column;

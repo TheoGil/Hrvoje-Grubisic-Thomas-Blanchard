@@ -5,9 +5,14 @@ $slideshow-controls-button-x-margin: 10px;
 $slideshow-controls-button-icon-size: 10px;
 
 .slideshow {
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  flex-grow: 1;
   box-sizing: border-box;
+  margin-top: 83px; // ✨ Header height
+
+  @include bp($breakpoint) {
+    width: 100vw;
+  }
 
   &-ui {
     display: flex;

@@ -134,7 +134,7 @@ class Slideshow extends Component {
 
   render() {
     return (
-      <div className="slideshow grow" ref={this.ref}>
+      <div className="slideshow" ref={this.ref}>
         <canvas ref={this.canvasRef} className="gl" />
         <div className="slideshow-captions-container">
           {this.props.slides.map((slide, i) => (

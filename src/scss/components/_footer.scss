@@ -1,7 +1,7 @@
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  // position: fixed;
+  // left: 0;
+  // bottom: 0;
   width: 100%;
   color: white;
   display: flex;
@@ -19,16 +19,32 @@
   }
 
   .column {
+    --pseudoElementScaleX: 0;
+
+    position: relative;
     justify-content: center;
     width: 100%;
     padding-left: 0;
     padding-right: 0;
 
     &:first-of-type {
-      border-bottom: 1px white solid;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 1px;
+        background-color: white;
+        transform: scaleX(var(--pseudoElementScaleX));
+        transform-origin: 0% 0%;
+      }
 
       @include bp($breakpoint) {
-        border-bottom-width: 0;
+        &::ater {
+          display: none;
+        }
       }
     }
 

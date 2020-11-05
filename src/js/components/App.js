@@ -24,6 +24,7 @@ class App extends Component {
     this.line2Ref = createRef();
     this.headerRef = createRef();
     this.slideshowControlsRef = createRef();
+    this.animatedLineRef = createRef();
     this.infosRef = createRef();
 
     this.onLoadProgress = this.onLoadProgress.bind(this);
@@ -120,12 +121,16 @@ class App extends Component {
         this.counterRef.current.ref.current,
         this.slideshowControlsRef.current,
         this.infosRef.current,
+        this.animatedLineRef.current,
       ],
       {
         opacity: 1,
         y: 0,
+        "--pseudoElementScaleX": (index, target) => {
+          return target.isSameNode(this.animatedLineRef.current) ? 1 : false;
+        },
         duration: 1,
-        stagger: 0.1,
+        stagger: 0.05,
         ease: "power2.out",
       }
     );
@@ -193,7 +198,7 @@ class App extends Component {
         />
 
         <footer className="footer">
-          <Column>
+          <Column ref={this.animatedLineRef}>
             <div className="slideshow-ui">
               <SlideshowCounter
                 ref={this.counterRef}
