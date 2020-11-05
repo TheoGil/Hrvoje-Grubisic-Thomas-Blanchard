@@ -60,17 +60,8 @@ class App extends Component {
       this.slides.forEach((slide) => {
         slide.video = document.createElement("video");
         slide.video.src = this.preloader.getItemByUrl(slide.src).blobUrl;
-
-        // Disclaimer: video autoplay is a confusing, constantly-changing browser feature.
-        // The best approach is to never assume that it will work, and therefore prepare for a fallback.
-        // Tested on mac: Chrome, Safari, Firefox; android: chrome
         slide.video.loop = true;
         slide.video.muted = true;
-        slide.video.play();
-        // TODO: test ios. Possible add following
-        // slide.video.setAttribute('crossorigin', 'anonymous');
-        // slide.video.setAttribute('webkit-playsinline', true);
-        // slide.video.setAttribute('playsinline', true);
 
         canPlayPromises.push(
           new Promise((resolve) => {
@@ -113,6 +104,10 @@ class App extends Component {
   }
 
   start() {
+    this.slides.forEach((slide) => {
+      slide.video.play();
+    });
+
     this.loaderRef.current.animateOut();
     this.slideshowRef.current.goToSlide(0);
     this.animateIn();
