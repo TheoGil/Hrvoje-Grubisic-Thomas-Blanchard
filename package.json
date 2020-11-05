@@ -93,6 +93,7 @@
     ]
   },
   "devDependencies": {
+    "can-autoplay": "^3.0.0",
     "focus-trap-react": "^8.1.1",
     "gsap": "^3.5.1",
     "ogl": "0.0.60",

@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import Preload from "preload-it";
 import gsap from "gsap";
+import canAutoplay from "can-autoplay";
 
 import SVGSpritesheet from "./SVGSpritesheet";
 import Header from "./Header";
@@ -33,6 +34,7 @@ class App extends Component {
     this.goToPreviousSlide = this.goToPreviousSlide.bind(this);
     this.goToNextSlide = this.goToNextSlide.bind(this);
     this.updateCounter = this.updateCounter.bind(this);
+    this.start = this.start.bind(this);
 
     this.state = {
       menuOpen: false,
@@ -101,9 +103,22 @@ class App extends Component {
   }
 
   onLoadComplete() {
+    canAutoplay.video().then(({ result }) => {
+      if (result) {
+        this.start();
+      } else {
+        this.loaderRef.current.displayPlayButton();
+      }
+    });
+  }
+
+  start() {
     this.loaderRef.current.animateOut();
     this.slideshowRef.current.goToSlide(0);
+    this.animateIn();
+  }
 
+  animateIn() {
     const TL = gsap.timeline();
 
     TL.to([this.line1Ref.current, this.line2Ref.current], {
@@ -176,7 +191,7 @@ class App extends Component {
           ref={this.headerRef}
         />
 
-        <Loader ref={this.loaderRef} />
+        <Loader ref={this.loaderRef} onClickButton={this.start} />
 
         <Slideshow
           onLoadProgress={this.onLoadProgress}
