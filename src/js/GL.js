@@ -165,14 +165,19 @@ class GL {
       duration: 1.5,
       ease: "power2.out",
       onUpdate: () => {
-        this.program.uniforms.uTransitionProgress.value = this.transitionProgress;
+        this.updateTransitionProgressUniform();
       },
       onComplete: () => {
         this.transitionProgress = 0;
         this.currentSlideIndex = index;
         this.program.uniforms.uTexture1.value = this.textures[index];
+        this.updateTransitionProgressUniform();
       },
     });
+  }
+
+  updateTransitionProgressUniform() {
+    this.program.uniforms.uTransitionProgress.value = this.transitionProgress;
   }
 
   dispose() {
